@@ -44,6 +44,11 @@ from pipeline import make_model
     show_default=True,
 )
 
+@click.option(
+    "--log-max_iter",
+    default=100,
+    type=int,
+    show_default=True,
 
 def train(
         dataset_path,
