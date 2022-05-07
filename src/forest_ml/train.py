@@ -50,6 +50,21 @@ from pipeline import make_model
     type=int,
     show_default=True,
 
+@click.option(
+    "--log-c",
+    default=1.0,
+    type=float,
+    show_default=True,
+)
+
+@click.option(
+    "-s",
+    "--save-model-path",
+    default="data/model.joblib",
+    type=click.Path(dir_okay=False, writable=True, path_type=Path),
+    show_default=True,
+)
+
 def train(
         dataset_path,
         random_state,
@@ -57,7 +72,7 @@ def train(
         scaler,
         log_penalty,
         log_max_iter,
-        log_C
+        log_c
 ):
 
     x_train, x_val, y_train, y_val = data_process(
