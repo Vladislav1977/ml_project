@@ -5,8 +5,8 @@ import click
 import pandas as pd
 from sklearn.metrics import accuracy_score
 
-from data import data_process
-from pipeline import make_model
+from .data import data_process
+from .pipeline import make_model
 
 @click.command()
 @click.option(
@@ -49,6 +49,7 @@ from pipeline import make_model
     default=100,
     type=int,
     show_default=True,
+)
 
 @click.option(
     "--log-c",
@@ -72,13 +73,15 @@ def train(
         scaler,
         log_penalty,
         log_max_iter,
-        log_c
+        log_c,
+        save_model_path
 ):
 
     x_train, x_val, y_train, y_val = data_process(
         dataset_path, random_state, val_size
     )
-    pipeline = make_model(scaler, log_penalty, log_max_iter, log_C, random_state)
+    pipeline = make_model(scaler, log_penalty, log_max_iter, log_c, random_state)
     pipeline.fit(x_train, y_train)
     accuracy = accuracy_score(y_val, pipeline.predict(x_val))
     dump(pipeline, save_model_path)
+    click.echo(accuracy)

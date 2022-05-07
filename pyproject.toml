@@ -4,6 +4,9 @@ version = "0.1.0"
 description = "ML-learning project predicting forest cover type"
 authors = ["Vladislav1977"]
 
+[tool.poetry.scripts]
+train = "forest_ml.train:train"
+
 [tool.poetry.dependencies]
 python = "3.9.*"
 pandas = "^1.4.2"

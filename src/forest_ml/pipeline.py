@@ -3,7 +3,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 
 
-def make_model(scaler=True, log_penalty="l1", log_max_iter=1000, log_c=1.0, random_state=42):
+def make_model(scaler, log_penalty, log_max_iter, log_c, random_state):
 
     """Logistic Regression classifier.
 
