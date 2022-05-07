@@ -30,6 +30,13 @@ from pipeline import make_model
     show_default=True,
 )
 
+@click.option(
+    "--scaler",
+    default=True,
+    type=bool,
+    show_default=True,
+)
+
 def train(
         dataset_path,
         random_state,
