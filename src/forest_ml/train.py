@@ -23,6 +23,12 @@ from pipeline import make_model
     show_default=True,
 )
 
+@click.option(
+    "--val-size",
+    default=0.3,
+    type=click.FloatRange(0, 1, min_open=True, max_open=True),
+    show_default=True,
+)
 
 def train(
         dataset_path,
