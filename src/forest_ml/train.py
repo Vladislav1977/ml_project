@@ -83,7 +83,15 @@ def train(
         dataset_path).split(random_state, val_size)
     pipeline = make_model(scaler,   log_penalty, log_max_iter, log_c, random_state)
     pipeline.fit(x_train, y_train)
-    accuracy = accuracy_score(y_val, pipeline.predict(x_val))
+    feature, target = data_process(dataset_path).extract()
+    cv = cross_validate(pipeline,
+                        feature, target, cv=5,
+                        return_estimator=True,
+                        scoring=['accuracy', "f1_weighted", "neg_log_loss"])
+    accuracy = cv["test_accuracy"].mean()
+    f1_weighted = cv["test_f1_weighted"].mean()
+    neg_log_loss = cv["test_neg_log_loss"].mean()
+    click.echo(f"accuracy score  {accuracy}.")
+    click.echo(f"f1_weighted score  {f1_weighted}.")
+    click.echo(f"neg_log_loss score  {neg_log_loss}.")
     dump(pipeline, save_model_path)
-    click.echo(accuracy)
-
