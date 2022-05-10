@@ -1,5 +1,7 @@
 from pathlib import Path
 from joblib import dump
+from sklearn.model_selection import cross_validate
+import sys
 
 import click
 import pandas as pd
@@ -46,7 +48,7 @@ from .pipeline import make_model
 
 @click.option(
     "--log-max_iter",
-    default=100,
+    default=1000,
     type=int,
     show_default=True,
 )
@@ -78,10 +80,10 @@ def train(
 ):
 
     x_train, x_val, y_train, y_val = data_process(
-        dataset_path, random_state, val_size
-    )
-    pipeline = make_model(scaler, log_penalty, log_max_iter, log_c, random_state)
+        dataset_path).split(random_state, val_size)
+    pipeline = make_model(scaler,   log_penalty, log_max_iter, log_c, random_state)
     pipeline.fit(x_train, y_train)
     accuracy = accuracy_score(y_val, pipeline.predict(x_val))
     dump(pipeline, save_model_path)
     click.echo(accuracy)
+
