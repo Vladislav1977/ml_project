@@ -6,6 +6,7 @@ authors = ["Vladislav1977"]
 
 [tool.poetry.scripts]
 train = "forest_ml.train:train"
+model_selection = "forest_ml.model_experiments:model_selection"
 
 [tool.poetry.dependencies]
 python = "3.9.*"
