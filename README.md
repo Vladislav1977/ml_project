@@ -36,4 +36,4 @@ poetry run mlflow ui
 ```
 The result should be similar to:
 
-![MLFlow experiments example][C:\Users\vlads\Pictures\ml.PNG]
+![MLFlow experiments example][https://github.com/Vladislav1977/git_2/blob/main/ml.PNG?raw=true]
