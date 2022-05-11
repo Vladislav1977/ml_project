@@ -28,10 +28,27 @@ with mlflow.start_run():
                                       SelectFromModel(selection_model),
                                       main_model)
             accuracy = cross_val_score(model, feature, target, scoring='accuracy', cv=5).mean()
-            model_accuracy[model] = accuracy
             mlflow.log_param('C', c)
             mlflow.log_param('accuracy', accuracy)
             if selection != -1:
                 mlflow.log_param('selection', model[1])
             mlflow.log_param('model_type', 'LogisticRegression')
+            mlflow.end_run()
+
+with mlflow.start_run():
+    for n_estimators in [50, 100, 200]:
+        for selection in [-1, 1]:
+            main_model = RandomForestClassifier(n_estimators=n_estimators)
+            if selection == -1:
+                model = make_pipeline(StandardScaler(), main_model)
+            elif selection == 1:
+                model = make_pipeline(StandardScaler(),
+                                          VarianceThreshold(0.2),
+                                          main_model)
+            accuracy = cross_val_score(model, feature, target, scoring='accuracy', cv=5).mean()
+            mlflow.log_param('accuracy', accuracy)
+            if selection == 1:
+                mlflow.log_param('selection', model[1])
+            mlflow.log_param('model_type', 'RandomForest')
+            mlflow.log_param('n_estimators', n_estimators)
             mlflow.end_run()
