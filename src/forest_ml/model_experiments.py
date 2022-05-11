@@ -11,6 +11,13 @@ import click
 from .data import data_process
 from pathlib import Path
 
+@click.command()
+@click.option(
+    "-d",
+    "--dataset-path",
+    default="data/train.csv",
+    type=click.Path(exists=True, dir_okay=False, path_type=Path)
+)
 
 def model_selection(dataset_path):
     feature, target = data_process(dataset_path).extract()
